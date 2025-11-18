@@ -1,6 +1,6 @@
 package com.marda.arch.hex.app_be_appointment_management.domain.schedule;
 
-import com.marda.arch.hex.app_be_appointment_management.domain.base.Domain;
+import com.marda.arch.hex.app_be_appointment_management.domain.base.GenericDomain;
 import com.marda.arch.hex.app_be_appointment_management.domain.exceptions.DomainExceptions;
 import com.marda.arch.hex.app_be_appointment_management.domain.person.Doctor;
 import com.marda.arch.hex.app_be_appointment_management.domain.person.DoctorId;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
-public class Schedule extends Domain {
+public class Schedule extends GenericDomain {
 
     private LocalDateTime initialTime;
     private LocalDateTime finalTime;
@@ -22,7 +22,8 @@ public class Schedule extends Domain {
 
     private final Integer SCHEDULE_RANGE = 15;
 
-    public Schedule(LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor) throws DomainExceptions {
+    public Schedule(Long id, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor) throws DomainExceptions {
+        super(id);
         this.validateSchedule(initialTime, finalTime);
         this.initialTime = initialTime;
         this.finalTime = finalTime;
@@ -32,8 +33,8 @@ public class Schedule extends Domain {
         this.estateSchedule = ScheduleStateEnum.AVAILABLE;
     }
 
-    public Schedule(LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor, ScheduleStateEnum estateSchedule) throws DomainExceptions {
-        this(initialTime, finalTime, doctor); // to protect validations
+    public Schedule(Long id, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor, ScheduleStateEnum estateSchedule) throws DomainExceptions {
+        this(id, initialTime, finalTime, doctor); // to protect validations
         this.estateSchedule = estateSchedule;
     }
 

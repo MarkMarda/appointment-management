@@ -1,5 +1,7 @@
 package com.marda.arch.hex.app_be_appointment_management.domain.schedule;
 
+import java.util.Arrays;
+
 public enum ScheduleStateEnum {
     AVAILABLE(1, "Available"),
     RESERVED(2, "Reserved"),
@@ -28,5 +30,12 @@ public enum ScheduleStateEnum {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static ScheduleStateEnum getByValue(Integer value) {
+        return Arrays.stream(ScheduleStateEnum.values())
+                .filter(type -> type.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Value not valid"));
     }
 }

@@ -1,6 +1,6 @@
 package com.marda.arch.hex.app_be_appointment_management.domain.reservations;
 
-import com.marda.arch.hex.app_be_appointment_management.domain.base.Domain;
+import com.marda.arch.hex.app_be_appointment_management.domain.base.GenericDomain;
 import com.marda.arch.hex.app_be_appointment_management.domain.exceptions.DomainExceptions;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.ScheduleException;
@@ -8,7 +8,7 @@ import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Reservation extends Domain {
+public class Reservation extends GenericDomain {
     private Long id;
     private Long doctorId;
     private Long specialtyId;
@@ -18,6 +18,7 @@ public class Reservation extends Domain {
     private final Integer reSchedulePeriod = 24;
 
     public Reservation(Long id, Long doctorId, Long specialtyId, Long scheduleId, Schedule schedule) throws DomainExceptions {
+        super(id);
         if (!schedule.isAvailable()) throw new DomainExceptions("Schedule not available");
         if (!Objects.equals(schedule.getDoctorId().getValue(), doctorId) ) throw new DomainExceptions("Schedule of another doctor");
         this.id = id;

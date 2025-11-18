@@ -1,0 +1,10 @@
+package com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.mappers;
+
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.exceptions.ScheduleAdapterDBException;
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.entities.ScheduleEntity;
+import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
+
+public interface ScheduleAdapterDBMapper {
+    ScheduleEntity toEntity(Schedule schedule) throws ScheduleAdapterDBException; //Is posible use MapperException o ScheduleAdapterException
+    Schedule toDomain(ScheduleEntity scheduleEntity) throws ScheduleAdapterDBException;
+}
