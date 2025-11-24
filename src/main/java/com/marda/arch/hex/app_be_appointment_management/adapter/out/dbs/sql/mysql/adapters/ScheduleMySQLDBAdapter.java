@@ -6,13 +6,15 @@ import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysq
 import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.repository.ScheduleRepository;
 import com.marda.arch.hex.app_be_appointment_management.application.exceptions.ScheduleApplicationException;
 import com.marda.arch.hex.app_be_appointment_management.application.ports.out.schedule.ScheduleQueryFindByIDPort;
+import com.marda.arch.hex.app_be_appointment_management.application.ports.out.schedule.ScheduleQueryFindBySpecialityPort;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ScheduleMySQLDBAdapter implements ScheduleQueryFindByIDPort {
+public class ScheduleMySQLDBAdapter implements ScheduleQueryFindByIDPort, ScheduleQueryFindBySpecialityPort {
     private final ScheduleRepository scheduleRepository;
 
     private final ScheduleAdapterDBMapper scheduleAdapterDBMapper;
@@ -38,5 +40,10 @@ public class ScheduleMySQLDBAdapter implements ScheduleQueryFindByIDPort {
         } catch (ScheduleAdapterDBException e) {
             throw new ScheduleApplicationException(e);
         }
+    }
+
+    @Override
+    public List<Schedule> findBySpeciality(Long specialityId) throws ScheduleApplicationException {
+        return List.of();
     }
 }

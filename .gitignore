@@ -40,3 +40,4 @@ out/
 .env
 
 ### VOLUMES ###
+db_appointment_management

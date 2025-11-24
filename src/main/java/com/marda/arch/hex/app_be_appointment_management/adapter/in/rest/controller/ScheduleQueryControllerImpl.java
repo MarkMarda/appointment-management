@@ -6,9 +6,11 @@ import com.marda.arch.hex.app_be_appointment_management.application.exceptions.S
 import com.marda.arch.hex.app_be_appointment_management.application.ports.in.schedule.ScheduleQueryFindByIdUseCase;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+@RestController
 public class ScheduleQueryControllerImpl extends GenericControllerImpl implements ScheduleQueryController {
     private final ScheduleQueryFindByIdUseCase scheduleQueryFindByIdUseCase;
 

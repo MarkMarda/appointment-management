@@ -2,7 +2,7 @@ package com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.constan
 
 public class APIConstants {
     // Schedules
-    public final static String API_SCHEDULE_QUERY = "Api/v1/schedules/queries";
+    public final static String API_SCHEDULE_QUERY = "api/v1/schedules/queries";
 
     //Doctors
 }

@@ -20,10 +20,11 @@ public class Schedule extends GenericDomain {
     private DoctorId doctorId; // value object
     private ScheduleStateEnum estateSchedule;
 
-    private final Integer SCHEDULE_RANGE = 15;
+    private final Integer SCHEDULE_RANGE = 14;
 
-    public Schedule(Long id, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor) throws DomainExceptions {
+    public Schedule(Long id, LocalDate date, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor) throws DomainExceptions {
         super(id);
+        this.date = date;
         this.validateSchedule(initialTime, finalTime);
         this.initialTime = initialTime;
         this.finalTime = finalTime;
@@ -33,8 +34,8 @@ public class Schedule extends GenericDomain {
         this.estateSchedule = ScheduleStateEnum.AVAILABLE;
     }
 
-    public Schedule(Long id, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor, ScheduleStateEnum estateSchedule) throws DomainExceptions {
-        this(id, initialTime, finalTime, doctor); // to protect validations
+    public Schedule(Long id, LocalDate date, LocalDateTime initialTime, LocalDateTime finalTime, Doctor doctor, ScheduleStateEnum estateSchedule) throws DomainExceptions {
+        this(id, date, initialTime, finalTime, doctor); // to protect validations
         this.estateSchedule = estateSchedule;
     }
 

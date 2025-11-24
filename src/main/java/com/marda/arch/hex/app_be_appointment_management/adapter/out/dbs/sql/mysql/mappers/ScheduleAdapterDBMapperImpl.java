@@ -28,6 +28,7 @@ public class ScheduleAdapterDBMapperImpl implements ScheduleAdapterDBMapper {
         try {
             Schedule schedule = new Schedule(
                     scheduleEntity.getId(),
+                    scheduleEntity.getDate(),
                     scheduleEntity.getInitialTime(),
                     scheduleEntity.getFinalTime(),
                     new Doctor(scheduleEntity.getDoctorId()),
