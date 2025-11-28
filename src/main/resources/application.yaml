@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: app-be-appointment-management
+#  main:
+#    allow-bean-definition-overriding: true
 
   output:
     ansi:

@@ -9,7 +9,7 @@ import java.util.List;
 import static com.marda.arch.hex.app_be_appointment_management.adapter.commons.utils.DateUtil.dateStr;
 import static com.marda.arch.hex.app_be_appointment_management.adapter.commons.utils.DateUtil.timeStr;
 
-@Component
+//@Component In configuration
 public class ScheduleAdapterRestMapperImpl implements ScheduleAdapterRestMapper {
     @Override
     public ScheduleDto toDto(Schedule schedule) {

@@ -14,7 +14,10 @@ public class ScheduleQueryService implements ScheduleQueryFindByIdUseCase, Sched
     private final ScheduleQueryFindByIDPort scheduleQueryFindByIDPort;
     private final ScheduleQueryFindBySpecialityPort scheduleQueryFindBySpecialityPort;
 
-    public ScheduleQueryService(ScheduleQueryFindByIDPort scheduleQueryFindByIDPort, ScheduleQueryFindBySpecialityPort scheduleQueryFindBySpecialityPort) {
+    public ScheduleQueryService(
+            ScheduleQueryFindByIDPort scheduleQueryFindByIDPort,
+            ScheduleQueryFindBySpecialityPort scheduleQueryFindBySpecialityPort
+    ) {
         this.scheduleQueryFindByIDPort = scheduleQueryFindByIDPort;
         this.scheduleQueryFindBySpecialityPort = scheduleQueryFindBySpecialityPort;
     }
@@ -27,6 +30,6 @@ public class ScheduleQueryService implements ScheduleQueryFindByIdUseCase, Sched
     //Example if it is needed
     @Override
     public List<Schedule> findBySpeciality(Long specialityId) throws ScheduleApplicationException {
-        return List.of();
+        return scheduleQueryFindBySpecialityPort.findBySpeciality(specialityId);
     }
 }

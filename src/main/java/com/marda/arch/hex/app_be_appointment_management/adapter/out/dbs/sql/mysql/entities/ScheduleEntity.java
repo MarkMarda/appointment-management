@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "tbl_schedule")
-@Entity
+@Entity(name = "ScheduleEntity")
 public class ScheduleEntity extends GenericEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,10 @@ public class ScheduleEntity extends GenericEntity {
     @NotNull(message = "Doctor Id is required")
     @Column(name = "doctor_id", nullable = false)
     private Long doctorId;
+
+    @NotNull(message = "Speciality Id is required")
+    @Column(name = "speciality_id", nullable = false)
+    private Long specialityId;
 
     @Column(name = "state_schedule", nullable = false)
     private Integer estateSchedule;

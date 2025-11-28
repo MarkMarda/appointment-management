@@ -4,7 +4,12 @@ import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.exce
 import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.entities.ScheduleEntity;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 
+import java.util.List;
+
 public interface ScheduleAdapterDBMapper {
     ScheduleEntity toEntity(Schedule schedule) throws ScheduleAdapterDBException; //Is posible use MapperException o ScheduleAdapterException
+
     Schedule toDomain(ScheduleEntity scheduleEntity) throws ScheduleAdapterDBException;
+
+    List<Schedule> toDomain(List<ScheduleEntity> scheduleEntityList) throws ScheduleAdapterDBException;
 }

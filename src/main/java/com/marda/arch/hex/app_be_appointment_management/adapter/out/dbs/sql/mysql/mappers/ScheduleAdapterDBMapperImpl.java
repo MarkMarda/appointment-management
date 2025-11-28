@@ -6,9 +6,14 @@ import com.marda.arch.hex.app_be_appointment_management.domain.exceptions.Domain
 import com.marda.arch.hex.app_be_appointment_management.domain.person.Doctor;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.ScheduleStateEnum;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+import java.util.List;
+
+//@Repository
+//@Component In confifuration
 public class ScheduleAdapterDBMapperImpl implements ScheduleAdapterDBMapper {
     @Override
     public ScheduleEntity toEntity(Schedule schedule) {
@@ -35,9 +40,23 @@ public class ScheduleAdapterDBMapperImpl implements ScheduleAdapterDBMapper {
                     ScheduleStateEnum.getByValue(scheduleEntity.getEstateSchedule())
 
             );
+
+            return schedule;
         } catch (DomainExceptions e) {
             throw new ScheduleAdapterDBException(e);
         }
-        return null;
+
+    }
+
+    //@SneakyThrows
+    @Override
+    public List<Schedule> toDomain(List<ScheduleEntity> scheduleEntityList) throws ScheduleAdapterDBException {
+        return scheduleEntityList.stream().map(scheduleEntity -> {
+            try {
+                return toDomain(scheduleEntity);
+            } catch (ScheduleAdapterDBException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository In configuration
 public class ScheduleMySQLDBAdapter implements ScheduleQueryFindByIDPort, ScheduleQueryFindBySpecialityPort {
     private final ScheduleRepository scheduleRepository;
 
@@ -44,6 +44,10 @@ public class ScheduleMySQLDBAdapter implements ScheduleQueryFindByIDPort, Schedu
 
     @Override
     public List<Schedule> findBySpeciality(Long specialityId) throws ScheduleApplicationException {
-        return List.of();
+        try {
+            return scheduleAdapterDBMapper.toDomain(scheduleRepository.findBySpeciality(specialityId));
+        } catch (ScheduleAdapterDBException e) {
+            throw new ScheduleApplicationException(e);
+        }
     }
 }

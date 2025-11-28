@@ -1,4 +1,4 @@
-package com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.controller;
+package com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.adapters;
 
 import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.dtos.ScheduleDto;
 import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.mappers.ScheduleAdapterRestMapper;
@@ -7,29 +7,29 @@ import com.marda.arch.hex.app_be_appointment_management.application.ports.in.sch
 import com.marda.arch.hex.app_be_appointment_management.application.ports.in.schedule.ScheduleQueryFindBySpecialityUseCase;
 import com.marda.arch.hex.app_be_appointment_management.domain.schedule.Schedule;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
-// Is commented beacause we have ScheduleQueryRestAdapter.
-//@RestController //It should be commented but Spring need it
-public class ScheduleQueryControllerImpl extends GenericControllerImpl implements ScheduleQueryRestController {
-    private final ScheduleQueryFindByIdUseCase scheduleQueryFindByIdUseCase;
-    private final ScheduleQueryFindBySpecialityUseCase scheduleQueryFindBySpecialityUseCase;
+public class ScheduleQueryFacade {
+    private final ScheduleQueryFindByIdUseCase findByIdUseCase;
+    private final ScheduleQueryFindBySpecialityUseCase findBySpecialityUseCase;
 
     private final ScheduleAdapterRestMapper scheduleAdapterRestMapper;
 
-    public ScheduleQueryControllerImpl(ScheduleQueryFindByIdUseCase scheduleQueryFindByIdUseCase, ScheduleQueryFindBySpecialityUseCase scheduleQueryFindBySpecialityUseCase, ScheduleAdapterRestMapper scheduleAdapterRestMapper) {
-        this.scheduleQueryFindByIdUseCase = scheduleQueryFindByIdUseCase;
-        this.scheduleQueryFindBySpecialityUseCase = scheduleQueryFindBySpecialityUseCase;
+
+    public ScheduleQueryFacade(
+            ScheduleQueryFindByIdUseCase findByIdUseCase,
+            ScheduleQueryFindBySpecialityUseCase findBySpecialityUseCase,
+            ScheduleAdapterRestMapper scheduleAdapterRestMapper
+    ) {
+        this.findByIdUseCase = findByIdUseCase;
+        this.findBySpecialityUseCase = findBySpecialityUseCase;
         this.scheduleAdapterRestMapper = scheduleAdapterRestMapper;
     }
 
-
-    @Override
     public ResponseEntity<ScheduleDto> findById(Long id) throws ScheduleApplicationException {
-        Optional<Schedule> scheduleOpt = scheduleQueryFindByIdUseCase.findById(id);
+        Optional<Schedule> scheduleOpt = findByIdUseCase.findById(id);
 
         if (scheduleOpt.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -38,9 +38,8 @@ public class ScheduleQueryControllerImpl extends GenericControllerImpl implement
         return ResponseEntity.ok(scheduleAdapterRestMapper.toDto(scheduleOpt.get()));
     }
 
-    @Override
     public ResponseEntity<List<ScheduleDto>> findBySpecialityId(Long specialityId) throws ScheduleApplicationException {
-        List<Schedule> scheduleList = scheduleQueryFindBySpecialityUseCase.findBySpeciality(specialityId);
+        List<Schedule> scheduleList = findBySpecialityUseCase.findBySpeciality(specialityId);
 
         if (scheduleList.isEmpty()) {
             return ResponseEntity.noContent().build();

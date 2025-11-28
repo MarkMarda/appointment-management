@@ -1,11 +1,26 @@
 package com.marda.arch.hex.app_be_appointment_management.configuration.mysql;
 
+import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.adapters.ScheduleQueryFacade;
+import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.adapters.ScheduleQueryRestAdapter;
+import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.mappers.ScheduleAdapterRestMapper;
+import com.marda.arch.hex.app_be_appointment_management.adapter.in.rest.mappers.ScheduleAdapterRestMapperImpl;
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.adapters.ScheduleMySQLDBAdapter;
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.mappers.ScheduleAdapterDBMapper;
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.mappers.ScheduleAdapterDBMapperImpl;
+import com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.repository.ScheduleRepository;
+import com.marda.arch.hex.app_be_appointment_management.application.ports.in.schedule.ScheduleQueryFindByIdUseCase;
+import com.marda.arch.hex.app_be_appointment_management.application.ports.in.schedule.ScheduleQueryFindBySpecialityUseCase;
 import com.marda.arch.hex.app_be_appointment_management.application.ports.out.schedule.ScheduleQueryFindByIDPort;
 import com.marda.arch.hex.app_be_appointment_management.application.ports.out.schedule.ScheduleQueryFindBySpecialityPort;
 import com.marda.arch.hex.app_be_appointment_management.application.services.ScheduleQueryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+// Because we are using Query in the ScheduleRepository
+@EnableJpaRepositories({
+        "com.marda.arch.hex.app_be_appointment_management.adapter.out.dbs.sql.mysql.repository"
+})
 @Configuration
 public class ScheduleMySQLConfig {
     // Application - Service
@@ -18,6 +33,49 @@ public class ScheduleMySQLConfig {
     }
 
     // Adapters
+    // Adapter - DBs - MySQL
+    @Bean
+    ScheduleMySQLDBAdapter scheduleMySQLDBAdapter(
+            ScheduleRepository scheduleRepository,
+            ScheduleAdapterDBMapper scheduleAdapterDBMapper
+    ) {
+        return new ScheduleMySQLDBAdapter(scheduleRepository, scheduleAdapterDBMapper);
+    }
+
+    // Adapter - API Rest - Spring MVC
+    // Is not mandatory
+    /*
+    @Bean
+    ScheduleQueryController scheduleQueryController(
+            ScheduleQueryFindByIdUseCase scheduleQueryFindByIdUseCase,
+            ScheduleAdapterRestMapper scheduleAdapterRestMapper
+    ) {
+        return new ScheduleQueryControllerImpl(scheduleQueryFindByIdUseCase, scheduleAdapterRestMapper);
+    }
+     */
+
+    @Bean
+    ScheduleQueryRestAdapter scheduleQueryRestAdapter(ScheduleQueryFacade scheduleQueryFacade) {
+        return new ScheduleQueryRestAdapter(scheduleQueryFacade);
+    }
+
+    @Bean
+    ScheduleQueryFacade scheduleQueryFacade(
+            ScheduleQueryFindByIdUseCase findByIdUseCase,
+            ScheduleQueryFindBySpecialityUseCase findBySpecialityUseCase,
+            ScheduleAdapterRestMapper scheduleAdapterRestMapper
+    ) {
+        return new ScheduleQueryFacade(findByIdUseCase, findBySpecialityUseCase, scheduleAdapterRestMapper);
+    }
 
     // Mappers
+    @Bean
+    ScheduleAdapterDBMapper scheduleAdapterDBMapper() {
+        return new ScheduleAdapterDBMapperImpl();
+    }
+
+    @Bean
+    ScheduleAdapterRestMapper scheduleAdapterRestMapper() {
+        return new ScheduleAdapterRestMapperImpl();
+    }
 }
